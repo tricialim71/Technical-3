@@ -1,0 +1,143 @@
+/* ==========================================================================
+   MILESTONE 1: TOKENS, RESET & FLEXBOX NAVIGATION
+   ========================================================================== */
+:root {
+  /* Colour Roles (Burgundy Palette - WCAG AA Compliant) */
+  --color-bg-canvas: #fcf9fa;
+  --color-bg-surface: #ffffff;
+  --color-text-primary: #2b0b14;
+  --color-text-muted: #674852;
+  --color-primary: #800020;        /* Classic Burgundy */
+  --color-primary-hover: #5e0017;  /* Deep Wine */
+  --color-primary-contrast: #ffffff;
+  --color-border: #e8d7db;
+  --color-focus-ring: #a31d3d;
+
+  /* Spacing Scale (8pt / 0.5rem grid) */
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-6: 1.5rem;   /* 24px */
+  --space-8: 2rem;     /* 32px */
+  --space-12: 3rem;    /* 48px */
+
+  /* Type Scale */
+  --font-family-base: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.266rem;
+  --font-size-2xl: 1.424rem;
+  --font-size-4xl: 1.802rem;
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-loose: 1.7;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-canvas);
+}
+
+h1, h2 {
+  color: var(--color-text-primary);
+  line-height: var(--line-height-tight);
+  font-weight: 700;
+}
+
+h1 {
+  font-size: var(--font-size-4xl);
+}
+
+h2 {
+  font-size: var(--font-size-2xl);
+}
+
+p {
+  margin-block-end: var(--space-4);
+}
+
+.lead {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-loose);
+  color: var(--color-text-muted);
+}
+
+/* Skip Link */
+.skip-link {
+  position: absolute;
+  top: -9999px;
+  left: var(--space-4);
+  background: var(--color-primary);
+  color: var(--color-primary-contrast);
+  padding: var(--space-2) var(--space-4);
+  z-index: 100;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: var(--space-1);
+}
+
+.skip-link:focus {
+  top: var(--space-4);
+}
+
+/* Site Navigation (Flexbox 1-dimensional flow) */
+.site-nav {
+  background-color: var(--color-bg-surface);
+  border-block-end: 1px solid var(--color-border);
+  padding-block: var(--space-3);
+  padding-inline: var(--space-4);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.site-nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column; /* Mobile-first vertical flow */
+  gap: var(--space-2);
+  max-width: 64rem;
+  margin-inline: auto;
+}
+
+.site-nav a {
+  display: block;
+  text-decoration: none;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  padding-block: var(--space-2);
+  padding-inline: var(--space-3);
+  border-radius: var(--space-1);
+}
+
+.site-nav a:hover {
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-canvas);
+}
+
+.site-nav a.active {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+/* Accessible focus outline */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
