@@ -298,3 +298,40 @@ main {
     padding-block: var(--space-12);
   }
 }
+
+/* ==========================================================================
+   MILESTONE 4: TRANSITIONS & PREFERS-REDUCED-MOTION
+   ========================================================================== */
+.site-nav a,
+.btn,
+.card {
+  transition-property: background-color, color, border-color, transform, box-shadow;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-out;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px -2px rgba(43, 11, 20, 0.12);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+}
+
+/* Accessible motion: suppress transitions and transforms if user requested reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .card:hover,
+  .btn-primary:hover {
+    transform: none;
+  }
+}
