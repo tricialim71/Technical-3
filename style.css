@@ -29,7 +29,6 @@
   --font-size-lg: 1.125rem;
   --font-size-xl: 1.266rem;
   --font-size-2xl: 1.424rem;
-  --font-size-4xl: 1.802rem;
 
   --line-height-tight: 1.25;
   --line-height-normal: 1.5;
@@ -58,8 +57,9 @@ h1, h2 {
   font-weight: 700;
 }
 
+/* FIX (Defect 3): Fluid typography clamp so h1 scales seamlessly across mobile, tablet, and desktop */
 h1 {
-  font-size: var(--font-size-4xl);
+  font-size: clamp(1.8rem, 3.2vw + 1rem, 2.4rem);
 }
 
 h2 {
@@ -98,7 +98,7 @@ p {
 .site-nav {
   background-color: var(--color-bg-surface);
   border-block-end: 1px solid var(--color-border);
-  padding-block: var(--space-3);
+  padding-block: var(--space-2); /* FIX (Defect 1): Tightened padding on small screens */
   padding-inline: var(--space-4);
   position: sticky;
   top: 0;
@@ -109,7 +109,7 @@ p {
   list-style: none;
   display: flex;
   flex-direction: column; /* Mobile-first vertical flow */
-  gap: var(--space-2);
+  gap: var(--space-1);    /* FIX (Defect 1): Reduced vertical spacing to save screen height */
   max-width: 64rem;
   margin-inline: auto;
 }
@@ -119,8 +119,8 @@ p {
   text-decoration: none;
   color: var(--color-text-muted);
   font-weight: 500;
-  padding-block: var(--space-2);
-  padding-inline: var(--space-3);
+  padding-block: var(--space-1); /* FIX (Defect 1): Compact link padding on small screens */
+  padding-inline: var(--space-2);
   border-radius: var(--space-1);
 }
 
@@ -151,7 +151,7 @@ main {
 }
 
 .hero {
-  padding-block: var(--space-8);
+  padding-block: var(--space-6);
   margin-block-end: var(--space-8);
   border-block-end: 1px solid var(--color-border);
 }
@@ -185,9 +185,11 @@ main {
   box-shadow: 0 1px 3px rgba(43, 11, 20, 0.08);
 }
 
+/* FIX (Defect 6): Responsive aspect-ratio replaces hardcoded pixel height */
 .card-img {
   width: 100%;
-  height: 200px;
+  aspect-ratio: 16 / 9;
+  height: auto;
   object-fit: cover;
   display: block;
 }
@@ -239,11 +241,11 @@ main {
   background-color: var(--color-primary-hover);
 }
 
+/* FIX (Defect 2): Standardized button sizing without full-width stretching mismatch */
 .btn-secondary {
   background-color: transparent;
   color: var(--color-text-primary);
   border-color: var(--color-border);
-  width: 100%;
 }
 
 .btn-secondary:hover {
@@ -257,18 +259,21 @@ main {
 
 /* Breakpoint 1: 480px - Nav links have inline room to switch to horizontal row */
 @media (min-width: 480px) {
+  .site-nav {
+    padding-block: var(--space-3);
+  }
+
   .site-nav ul {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
+    gap: var(--space-2);
   }
 
   .site-nav a {
     display: inline-block;
-  }
-
-  .btn-secondary {
-    width: auto;
+    padding-block: var(--space-2);
+    padding-inline: var(--space-3);
   }
 }
 
@@ -278,18 +283,10 @@ main {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-8);
   }
-
-  .card-img {
-    height: 230px;
-  }
 }
 
-/* Breakpoint 3: 960px - Generous space for hero typography and comfortable container gutters */
+/* Breakpoint 3: 960px - Generous space for hero padding and container gutters */
 @media (min-width: 960px) {
-  h1 {
-    font-size: 2.25rem;
-  }
-
   .hero {
     padding-block: var(--space-12);
   }
@@ -319,6 +316,11 @@ main {
   transform: translateY(-1px);
 }
 
+/* FIX (Defect 4): Added consistent hover elevation to secondary buttons */
+.btn-secondary:hover {
+  transform: translateY(-1px);
+}
+
 /* Accessible motion: suppress transitions and transforms if user requested reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -331,7 +333,8 @@ main {
   }
 
   .card:hover,
-  .btn-primary:hover {
+  .btn-primary:hover,
+  .btn-secondary:hover {
     transform: none;
   }
 }
